@@ -13,15 +13,12 @@ class AppleController extends Controller
 
     public function actionApples()
     {
-        
         $apples = new Apple();
-        if (isset(Yii::$app->request->post()['generate']) {
+        
+        if (isset(Yii::$app->request->post()['generate'])) {
             $apples->generateApples(Yii::$app->request->post()['apples_quantity']);
-            $rows = (new Query())->select(['id', 'color', 'piece'])->from('apples')->all();
-            foreach ($rows as $row) {
-                $this->generateImages($row['id'], $row['color'], $row['piece']);
-            }
         }
+        
         if (isset(Yii::$app->request->post()['eat']) && isset(Yii::$app->request->post()['percent'])) {
             $id = Yii::$app->request->post()['id'];
             $piece = Yii::$app->request->post()['piece'];
@@ -45,13 +42,18 @@ class AppleController extends Controller
         if (isset(Yii::$app->request->post()['fall'])) {
             $apples->fallDown(Yii::$app->request->post()['id']);
         }
-
+        
         $allApples = $apples->viewApples();
 
         foreach ($allApples as $apple) {
-            if (isset($apple['fell_at']) &&  ((time() - strtotime($apple['fell_at'])) > 18000)) {
+            if (isset($apple['fell_at']) && ((time() - strtotime($apple['fell_at'])) > 18000)) {
                 $apples->turnToTurd($apple['id']);
             }
+        }
+        
+        $rows = (new Query())->select(['id', 'color', 'piece'])->from('apples')->all();
+        foreach ($rows as $row) {
+            $this->generateImages($row['id'], $row['color'], $row['piece']);
         }
 
         return $this->render('apples', ['tree'=>$allApples]);
@@ -79,8 +81,5 @@ class AppleController extends Controller
         fclose($imgphp);
 
     }
-
-
-
-
+    
 }
