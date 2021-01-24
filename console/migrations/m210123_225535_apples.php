@@ -13,7 +13,7 @@ class m210123_225535_apples extends Migration
     public function safeUp()
     {
         $this->createTable('{{%apples}}', [
-            'id' => $this->primaryKey(),
+            'id' => $this->primaryKey()->unsigned(),
             'born_at' => $this->timestamp(),
             'fell_at' => $this->timestamp()->null(),
             'color' => $this->text(),
