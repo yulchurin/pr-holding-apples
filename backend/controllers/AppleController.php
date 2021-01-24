@@ -13,9 +13,9 @@ class AppleController extends Controller
 
     public function actionApples()
     {
+        
         $apples = new Apple();
-        if (isset(Yii::$app->request->post()['generate']))
-        {
+        if (isset(Yii::$app->request->post()['generate']) {
             $apples->generateApples(Yii::$app->request->post()['apples_quantity']);
             $rows = (new Query())->select(['id', 'color', 'piece'])->from('apples')->all();
             foreach ($rows as $row) {
