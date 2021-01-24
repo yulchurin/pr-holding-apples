@@ -15,7 +15,7 @@ class m210123_225535_apples extends Migration
         $this->createTable('{{%apples}}', [
             'id' => $this->primaryKey(),
             'born_at' => $this->timestamp(),
-            'fell_at' => $this->timestamp(),
+            'fell_at' => $this->timestamp()->null(),
             'color' => $this->text(),
             'status' => $this->text(),
             'piece' => $this->tinyInteger()
