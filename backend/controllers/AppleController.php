@@ -14,7 +14,7 @@ class AppleController extends Controller
     public function actionApples()
     {
         $apple = new Apple();
-        if (isset(Yii::$app->request->post()['generate']) {
+        if (isset(Yii::$app->request->post()['generate'])) {
             $apple->generateApples(Yii::$app->request->post()['apples_quantity']);
             $rows = (new Query())->select(['id', 'color', 'piece'])->from('apples')->all();
             foreach ($rows as $row) {
@@ -47,9 +47,9 @@ class AppleController extends Controller
 
         $allApples = $apple->viewApples();
 
-        foreach ($allApples as $apple) {
-            if (isset($apple['fell_at']) &&  ((time() - strtotime($apple['fell_at'])) > 18000)) {
-                $apple->turnToTurd($apple['id']);
+        foreach ($allApples as $singleApple) {
+            if (isset($singleApple['fell_at']) &&  ((time() - strtotime($singleApple['fell_at'])) > 18000)) {
+                $apple->turnToTurd($singleApple['id']);
             }
         }
 
@@ -78,5 +78,5 @@ class AppleController extends Controller
         fclose($imgphp);
 
     }
-    
+
 }
